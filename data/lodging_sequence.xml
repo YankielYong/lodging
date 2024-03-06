@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="lodging_reservation_sequence" model="ir.sequence">
+            <field name="name">Reservation Sequence</field>
+            <field name="code">lodging.reservation</field>
+            <field name="prefix">RSV</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="lodging_check_in_sequence" model="ir.sequence">
+            <field name="name">Check In Sequence</field>
+            <field name="code">lodging.check_in</field>
+            <field name="prefix">CHI</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="lodging_check_out_sequence" model="ir.sequence">
+            <field name="name">Check Out Sequence</field>
+            <field name="code">lodging.check_out</field>
+            <field name="prefix">CHO</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

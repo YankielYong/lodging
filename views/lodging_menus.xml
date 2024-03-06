@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="lodging_menu"
+        name="Lodging"
+        sequence="10" />
+
+    <menuitem
+        id="lodging_room_menu"
+        name="Rooms"
+        action="action_room"
+        parent="lodging_menu"
+        groups="group_lodging_admin,group_lodging_invited"
+        sequence="10" />
+
+    <menuitem
+        id="lodging_guest_menu"
+        name="Guests"
+        action="action_guest"
+        parent="lodging_menu"
+        groups="group_lodging_commercial_specialist"
+        sequence="20" />
+        
+    <menuitem
+        id="lodging_record_menu"
+        name="Record"
+        parent="lodging_menu"
+        groups="group_lodging_commercial_specialist"
+        sequence="30" />
+
+    <menuitem
+        id="lodging_reservation_menu"
+        name="Reservations"
+        action="action_reservation"
+        parent="lodging_record_menu"
+        sequence="8" />
+
+    <menuitem
+        id="lodging_check_in_menu"
+        name="Check-In"
+        action="action_check_in"
+        parent="lodging_record_menu"
+        sequence="9" />
+
+    <menuitem
+        id="lodging_check_out_menu"
+        name="Check-Out"
+        action="action_check_out"
+        parent="lodging_record_menu"
+        sequence="10" />
+
+    <menuitem
+        id="lodging_configuration_menu"
+        name="Configuration"
+        parent="lodging_menu"
+        groups="group_lodging_admin"
+        sequence="40" />
+
+    <menuitem
+        id="lodging_room_type_menu"
+        name="Room Types"
+        action="action_room_type"
+        parent="lodging_configuration_menu"
+        sequence="10" />
+
+</odoo>

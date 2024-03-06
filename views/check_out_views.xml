@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_lodging_check_out_tree" model="ir.ui.view">
+        <field name="name">lodging.check_out.tree</field>
+        <field name="model">lodging.check_out</field>
+        <field name="arch" type="xml">
+            <tree string="Check-Out" create="0" edit="0">
+                <field name="name" />
+                <field name="room_id" />
+                <field name="create_date" string="Exit Date" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_lodging_check_out_form" model="ir.ui.view">
+        <field name="name">lodging.check_out.form</field>
+        <field name="model">lodging.check_out</field>
+        <field name="arch" type="xml">
+            <form string="Check-Out">
+                <header></header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="room_id" />
+                        </group>
+                        <group>
+                            <label for="create_date" string="Exit Date"/>
+                            <field name="create_date" nolabel="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="guests_page" string="Guests">
+                            <field name="guests_ids" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_lodging_check_out_search" model="ir.ui.view">
+        <field name="name">lodging.check_out.search</field>
+        <field name="model">lodging.check_out</field>
+        <field name="arch" type="xml">
+            <search string="Check-Out">
+                <field name="name" />
+                <field name="room_id" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_check_out" model="ir.actions.act_window">
+        <field name="name">Check-Out</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lodging.check_out</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="lodging.view_lodging_check_out_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No check-out found
+            </p>
+        </field>
+    </record>
+
+</odoo>

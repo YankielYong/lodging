@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_lodging_reservation_tree" model="ir.ui.view">
+        <field name="name">lodging.reservation.tree</field>
+        <field name="model">lodging.reservation</field>
+        <field name="arch" type="xml">
+            <tree string="Reservations" edit="0">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="room_id" />
+                <field name="arrival_date" />
+                <field name="exit_date" />
+                <field name="number_of_days" />
+                <field name="state" widget="badge" decoration-success="state=='finished'"
+                    decoration-primary="state=='inprogress'"
+                    decoration-danger="state=='cancelled'" decoration-info="state=='pending'" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_lodging_reservation_form" model="ir.ui.view">
+        <field name="name">lodging.reservation.form</field>
+        <field name="model">lodging.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Reservations">
+                <header>
+                    <button name="register_check_in" class="oe_highlight" string="Register Check-In"
+                        type="object"
+                        context="{'default_reservation_id': id, 'default_room_id': room_id, 'default_guests_ids': guests_ids}"
+                        attrs="{'invisible': ['|', ('read_only', '=', False), ('state', '!=', 'pending')]}" />
+                    <button name="register_check_out" class="oe_highlight"
+                        string="Register Check-Out"
+                        type="object"
+                        context="{'default_reservation_id': id, 'default_room_id': room_id, 'default_guests_ids': guests_ids}"
+                        attrs="{'invisible': ['|', ('read_only', '=', False), ('state', '!=', 'inprogress')]}" />
+                    <button name="cancel_reservation" class="oe_highlight"
+                        string="Cancel Reservation"
+                        type="object"
+                        attrs="{'invisible': ['|', ('read_only', '=', False), ('state', '!=', 'pending')]}" />
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="pending,inprogress,finished,cancelled" />
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="In Progress" bg_color="bg-primary"
+                        attrs="{'invisible': [('state', '!=', 'inprogress')]}" />
+                    <widget name="web_ribbon" title="Finished" bg_color="bg-success"
+                        attrs="{'invisible': [('state', '!=', 'finished')]}" />
+                    <widget name="web_ribbon" title="Cancelled" bg_color="bg-danger"
+                        attrs="{'invisible': [('state', '!=', 'cancelled')]}" />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" />
+                            <field name="read_only" invisible="1" />
+                            <field name="active" invisible="1" />
+                            <field name="guests_ids" invisible="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"
+                                attrs="{'readonly': [('read_only', '=', True)]}" />
+                            <field name="room_id" options="{'no_create': True}"
+                                attrs="{'readonly': [('read_only', '=', True)]}" />
+                        </group>
+                        <group>
+                            <field name="arrival_date"
+                                attrs="{'readonly': [('read_only', '=', True)]}" />
+                            <field name="exit_date" />
+                            <field name="number_of_days"
+                                attrs="{'readonly': [('read_only', '=', True)]}" />
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_lodging_reservation_search" model="ir.ui.view">
+        <field name="name">lodging.reservation.search</field>
+        <field name="model">lodging.reservation</field>
+        <field name="arch" type="xml">
+            <search string="Reservations">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="room_id" />
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]" />
+                <separator />
+                <filter name="pending" string="Pending" domain="[('state', '=', 'pending')]" />
+                <filter name="inprogress" string="In Progress"
+                    domain="[('state', '=', 'inprogress')]" />
+                <filter name="finished" string="Finished" domain="[('state', '=', 'finished')]" />
+                <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_reservation" model="ir.actions.act_window">
+        <field name="name">Reservations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lodging.reservation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="lodging.view_lodging_reservation_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No reservations found
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_lodging_check_in_tree" model="ir.ui.view">
+        <field name="name">lodging.check_in.tree</field>
+        <field name="model">lodging.check_in</field>
+        <field name="arch" type="xml">
+            <tree string="Check-In" create="0" edit="0">
+                <field name="name" />
+                <field name="reservation_id" />
+                <field name="room_id" />
+                <field name="create_date" string="Arrival Date" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_lodging_check_in_form" model="ir.ui.view">
+        <field name="name">lodging.check_in.form</field>
+        <field name="model">lodging.check_in</field>
+        <field name="arch" type="xml">
+            <form string="Check-In">
+                <header></header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" />
+                            <field name="read_only" invisible="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="reservation_id" />
+                            <field name="room_id" />
+                        </group>
+                        <group>
+                            <label for="create_date" string="Arrival Date"
+                                attrs="{'invisible': [('read_only', '=', False)]}" />
+                            <field name="create_date" nolabel="1"
+                                attrs="{'invisible': [('read_only', '=', False)]}" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="guests_page" string="Guests">
+                            <field name="guests_ids"
+                                attrs="{'readonly': [('read_only', '=', True)]}" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_lodging_check_in_search" model="ir.ui.view">
+        <field name="name">lodging.check_in.search</field>
+        <field name="model">lodging.check_in</field>
+        <field name="arch" type="xml">
+            <search string="Check-In">
+                <field name="name" />
+                <field name="reservation_id" />
+                <field name="room_id" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_check_in" model="ir.actions.act_window">
+        <field name="name">Check-In</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lodging.check_in</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="lodging.view_lodging_check_in_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No check-in found
+            </p>
+        </field>
+    </record>
+
+</odoo>

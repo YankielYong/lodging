@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Hospedaje',
+    'version': '',
+    'description': """ Aplicación de hospedajes """,
+    'summary': """ Aplicación que permite la gestión de hospedajes """,
+    'author': 'Yankiel Yong',
+    'website': '',
+    'category': 'Services/Hospedaje',
+    'depends': ['base', 'mail'],
+    "data": [
+        "security/lodging_security.xml",
+        "security/ir.model.access.csv",
+        "data/lodging_sequence.xml",
+        "views/room_type_views.xml",
+        "views/room_views.xml",
+        "views/res_partner_views.xml",
+        "views/reservation_views.xml",
+        "views/check_in_views.xml",
+        "views/check_out_views.xml",
+        "views/lodging_menus.xml",
+    ],
+    'application': True,
+    'installable': True,
+    'auto_install': False,
+    'license': 'LGPL-3',
+}

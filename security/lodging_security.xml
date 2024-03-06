@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_lodging_parent_category" model="ir.module.category">
+        <field name="name">Lodging</field>
+        <field name="visible" eval="True" />
+    </record>
+
+    <record id="module_lodging_category" model="ir.module.category">
+        <field name="name">Lodging</field>
+        <field name="parent_id" ref="module_lodging_parent_category" />
+        <field name="visible" eval="True" />
+    </record>
+
+    <record id="group_lodging_invited" model="res.groups">
+        <field name="name">Invited</field>
+        <field name="category_id" ref="module_lodging_category" />
+    </record>
+
+    <record id="group_lodging_admin" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="module_lodging_category" />
+    </record>
+
+    <record id="group_lodging_commercial_specialist" model="res.groups">
+        <field name="name">Commercial Specialist</field>
+        <field name="category_id" ref="module_lodging_category" />
+    </record>
+
+</odoo>

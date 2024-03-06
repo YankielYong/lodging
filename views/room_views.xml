@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_lodging_room_tree" model="ir.ui.view">
+        <field name="name">lodging.room.tree</field>
+        <field name="model">lodging.room</field>
+        <field name="arch" type="xml">
+            <tree string="Rooms">
+                <field name="name" />
+                <field name="room_type_id" />
+                <field name="capacity" />
+                <field name="night_price" />
+                <field name="currency_id" invisible="1" />
+                <field name="state" widget="badge" decoration-success="state=='available'"
+                    decoration-danger="state=='busy'"
+                    groups="lodging.group_lodging_admin,lodging.group_lodging_commercial_specialist" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_lodging_room_form" model="ir.ui.view">
+        <field name="name">lodging.room.form</field>
+        <field name="model">lodging.room</field>
+        <field name="arch" type="xml">
+            <form string="Rooms">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="available,busy"
+                        groups="lodging.group_lodging_admin,lodging.group_lodging_commercial_specialist" />
+                </header>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar" />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="number" />
+                            <field name="night_price" />
+                        </group>
+                        <group>
+                            <field name="currency_id" invisible="1" />
+                            <field name="room_type_id" />
+                            <field name="capacity" />
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_lodging_room_search" model="ir.ui.view">
+        <field name="name">lodging.room.search</field>
+        <field name="model">lodging.room</field>
+        <field name="arch" type="xml">
+            <search string="Rooms">
+                <field name="number" />
+                <filter name="filter_available" string="Available"
+                    domain="[('state', '=', 'available')]"
+                    groups="lodging.group_lodging_admin,lodging.group_lodging_commercial_specialist" />
+                <filter name="filter_busy" string="Busy" domain="[('state', '=', 'busy')]"
+                    groups="lodging.group_lodging_admin,lodging.group_lodging_commercial_specialist" />
+                <group expand="0" string="Group By...">
+                    <filter name="group_by_room_type_id" string="Room Type"
+                        context="{'group_by': 'room_type_id'}" />
+                    <filter name="group_by_state" string="State"
+                        context="{'group_by': 'state'}"
+                        groups="lodging.group_lodging_admin,lodging.group_lodging_commercial_specialist" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="view_lodging_room_kanban" model="ir.ui.view">
+        <field name="name">lodging.room.kanban</field>
+        <field name="model">lodging.room</field>
+        <field name="arch" type="xml">
+            <kanban string="Rooms">
+                <field name="id" />
+                <field name="name" />
+                <field name="state" />
+                <field name="room_type_id" />
+                <field name="currency_id" />
+                <field name="night_price" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img alt="Room" class="o_image_64_contain"
+                                    t-att-src="kanban_image('lodging.room', 'image', record.id.raw_value)" />
+                            </div>
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top mb-0">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name" />
+                                        </strong>
+                                    </div>
+                                    <field name="state" widget="label_selection"
+                                        groups="lodging.group_lodging_admin,lodging.group_lodging_commercial_specialist"
+                                        options="{'classes': {'busy': 'danger', 'available': 'success'}}" />
+                                </div>
+                                <div t-if="record.room_type_id.value">
+                                    <t t-esc="record.room_type_id.value" />
+                                </div>
+                                <field name="night_price" widget="monetary"
+                                    options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_room" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lodging.room</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="lodging.view_lodging_room_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No room found
+            </p>
+        </field>
+    </record>
+
+</odoo>
